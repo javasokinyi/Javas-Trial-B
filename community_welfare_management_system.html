@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0f1e;
+  --bg2: #0d1526;
+  --bg3: #111d35;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0f4ff;
+  --text2: #8a9bc4;
+  --text3: #5a6e99;
+  --blue: #2563eb;
+  --blue2: #3b82f6;
+  --cyan: #06b6d4;
+  --cyan2: #22d3ee;
+  --green: #10b981;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --grad1: linear-gradient(135deg, #1e40af 0%, #0891b2 100%);
+  --grad2: linear-gradient(135deg, #312e81 0%, #1e40af 100%);
+  --font: 'DM Sans', sans-serif;
+  --font2: 'Syne', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+/* Navigation */
+.nav { display:flex; align-items:center; justify-content:space-between; padding:0 2rem; height:64px; border-bottom:1px solid var(--border); background:rgba(10,15,30,0.9); backdrop-filter:blur(20px); position:sticky; top:0; z-index:100; }
+.logo { display:flex; align-items:center; gap:10px; font-family:var(--font2); font-size:1.15rem; font-weight:700; color:var(--text); }
+.logo-icon { width:34px; height:34px; background:var(--grad1); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+.nav-links { display:flex; gap:2rem; }
+.nav-links a { color:var(--text2); font-size:.875rem; text-decoration:none; cursor:pointer; transition:.2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-ctas { display:flex; gap:.75rem; align-items:center; }
+.btn { padding:.5rem 1.25rem; border-radius:8px; font-size:.875rem; font-weight:500; cursor:pointer; border:none; transition:.2s; font-family:var(--font); }
+.btn-ghost { background:transparent; color:var(--text2); border:1px solid var(--border2); }
+.btn-ghost:hover { color:var(--text); border-color:var(--border2); background:var(--surface2); }
+.btn-primary { background:var(--grad1); color:#fff; }
+.btn-primary:hover { opacity:.9; transform:translateY(-1px); }
+.btn-sm { padding:.4rem 1rem; font-size:.8rem; }
+
+/* Page system */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ===== HOME PAGE ===== */
+.hero { padding:5rem 2rem 4rem; text-align:center; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.15) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 80% 50%, rgba(6,182,212,0.08) 0%, transparent 50%); pointer-events:none; }
+.hero-badge { display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .9rem; background:rgba(37,99,235,0.15); border:1px solid rgba(37,99,235,0.3); border-radius:100px; font-size:.78rem; color:var(--cyan2); margin-bottom:1.5rem; }
+.hero h1 { font-family:var(--font2); font-size:clamp(2rem, 5vw, 3.4rem); font-weight:800; line-height:1.1; max-width:720px; margin:0 auto 1.25rem; }
+.hero h1 span { background:linear-gradient(135deg, #60a5fa, #22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero p { font-size:1.05rem; color:var(--text2); max-width:560px; margin:0 auto 2rem; line-height:1.7; }
+.hero-ctas { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
+.btn-hero { padding:.75rem 1.75rem; border-radius:10px; font-size:.95rem; font-weight:600; cursor:pointer; border:none; font-family:var(--font); transition:.2s; }
+.btn-hero-primary { background:var(--grad1); color:#fff; box-shadow:0 0 30px rgba(37,99,235,0.3); }
+.btn-hero-primary:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(37,99,235,0.5); }
+.btn-hero-outline { background:transparent; color:var(--text); border:1px solid var(--border2); }
+.btn-hero-outline:hover { background:var(--surface2); }
+
+/* Stats */
+.stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; padding:2rem; max-width:800px; margin:2rem auto 0; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; text-align:center; }
+.stat-num { font-family:var(--font2); font-size:1.8rem; font-weight:800; background:var(--grad1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat-label { font-size:.78rem; color:var(--text3); margin-top:.25rem; }
+
+/* Features */
+.section { padding:4rem 2rem; max-width:1100px; margin:0 auto; }
+.section-title { font-family:var(--font2); font-size:1.9rem; font-weight:800; text-align:center; margin-bottom:.5rem; }
+.section-sub { color:var(--text2); text-align:center; font-size:.95rem; margin-bottom:3rem; }
+.features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.feature-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.5rem; transition:.3s; }
+.feature-card:hover { background:var(--surface2); border-color:var(--border2); transform:translateY(-2px); }
+.feat-icon { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:1rem; }
+.feat-icon.blue { background:rgba(37,99,235,0.2); }
+.feat-icon.cyan { background:rgba(6,182,212,0.2); }
+.feat-icon.green { background:rgba(16,185,129,0.2); }
+.feat-icon.purple { background:rgba(139,92,246,0.2); }
+.feat-icon.amber { background:rgba(245,158,11,0.2); }
+.feature-card h3 { font-size:.95rem; font-weight:600; margin-bottom:.4rem; }
+.feature-card p { font-size:.82rem; color:var(--text2); line-height:1.6; }
+
+/* Orgs */
+.orgs-section { padding:3rem 2rem; text-align:center; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--bg2); }
+.orgs-label { font-size:.8rem; color:var(--text3); text-transform:uppercase; letter-spacing:.08em; margin-bottom:1.25rem; }
+.orgs-row { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; }
+.org-chip { padding:.45rem 1rem; background:var(--surface2); border:1px solid var(--border); border-radius:100px; font-size:.8rem; color:var(--text2); }
+
+/* Testimonials */
+.testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.testi-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.5rem; }
+.testi-stars { color:var(--amber); font-size:.85rem; margin-bottom:.75rem; }
+.testi-text { font-size:.85rem; color:var(--text2); line-height:1.6; margin-bottom:1rem; font-style:italic; }
+.testi-author { display:flex; align-items:center; gap:.6rem; }
+.testi-avatar { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.75rem; font-weight:700; color:#fff; }
+.testi-name { font-size:.82rem; font-weight:600; }
+.testi-role { font-size:.75rem; color:var(--text3); }
+
+/* CTA Section */
+.cta-section { padding:4rem 2rem; text-align:center; background:var(--bg2); }
+.cta-box { max-width:600px; margin:0 auto; padding:3rem; background:linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.08)); border:1px solid rgba(37,99,235,0.25); border-radius:20px; }
+.cta-box h2 { font-family:var(--font2); font-size:1.9rem; font-weight:800; margin-bottom:.75rem; }
+.cta-box p { color:var(--text2); margin-bottom:1.75rem; font-size:.95rem; }
+
+/* Footer */
+.footer { padding:2rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.footer p { font-size:.8rem; color:var(--text3); }
+.footer-links { display:flex; gap:1.5rem; }
+.footer-links a { font-size:.8rem; color:var(--text3); text-decoration:none; cursor:pointer; }
+.footer-links a:hover { color:var(--text2); }
+
+/* ===== PRICING ===== */
+.pricing-toggle { display:flex; align-items:center; gap:.75rem; justify-content:center; margin-bottom:2.5rem; }
+.toggle-label { font-size:.875rem; color:var(--text2); }
+.toggle-switch { width:44px; height:24px; background:var(--blue); border-radius:12px; position:relative; cursor:pointer; }
+.toggle-switch::after { content:''; position:absolute; width:18px; height:18px; background:#fff; border-radius:50%; top:3px; left:3px; transition:.2s; }
+.toggle-switch.yearly::after { left:23px; }
+.badge-save { background:rgba(16,185,129,0.2); color:var(--green); border-radius:100px; padding:.2rem .6rem; font-size:.72rem; font-weight:600; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.pricing-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.75rem; position:relative; }
+.pricing-card.featured { background:linear-gradient(135deg, rgba(37,99,235,0.12), rgba(6,182,212,0.06)); border-color:rgba(37,99,235,0.4); }
+.plan-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--grad1); color:#fff; font-size:.72rem; font-weight:700; padding:.3rem .9rem; border-radius:100px; white-space:nowrap; }
+.plan-name { font-family:var(--font2); font-size:1.1rem; font-weight:700; margin-bottom:.25rem; }
+.plan-price { font-family:var(--font2); font-size:2.5rem; font-weight:800; margin:.75rem 0 .25rem; }
+.plan-price span { font-size:.9rem; font-weight:400; color:var(--text2); }
+.plan-desc { font-size:.82rem; color:var(--text2); margin-bottom:1.5rem; }
+.plan-features { list-style:none; display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.75rem; }
+.plan-features li { font-size:.83rem; color:var(--text2); display:flex; align-items:center; gap:.5rem; }
+.plan-features li::before { content:'✓'; color:var(--green); font-weight:700; font-size:.85rem; flex-shrink:0; }
+.plan-features li.no::before { content:'✕'; color:var(--text3); }
+.plan-features li.no { color:var(--text3); }
+
+/* ===== AUTH ===== */
+.auth-page { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; background:var(--bg); }
+.auth-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2.5rem; width:100%; max-width:420px; }
+.auth-logo { text-align:center; margin-bottom:1.75rem; }
+.auth-logo .logo-icon { width:48px; height:48px; border-radius:12px; margin:0 auto .75rem; font-size:22px; }
+.auth-logo h2 { font-family:var(--font2); font-size:1.4rem; font-weight:800; margin-bottom:.25rem; }
+.auth-logo p { font-size:.85rem; color:var(--text2); }
+.form-group { margin-bottom:1.1rem; }
+.form-label { font-size:.8rem; color:var(--text2); font-weight:500; display:block; margin-bottom:.4rem; }
+.form-input { width:100%; padding:.65rem .9rem; background:rgba(255,255,255,0.05); border:1px solid var(--border2); border-radius:8px; color:var(--text); font-size:.875rem; font-family:var(--font); outline:none; transition:.2s; }
+.form-input:focus { border-color:var(--blue2); background:rgba(37,99,235,0.05); }
+.form-input::placeholder { color:var(--text3); }
+.form-submit { width:100%; padding:.75rem; background:var(--grad1); border:none; border-radius:8px; color:#fff; font-size:.9rem; font-weight:600; cursor:pointer; font-family:var(--font); transition:.2s; margin-top:.5rem; }
+.form-submit:hover { opacity:.9; }
+.auth-footer { text-align:center; margin-top:1.25rem; font-size:.82rem; color:var(--text2); }
+.auth-footer a { color:var(--blue2); text-decoration:none; cursor:pointer; }
+.auth-divider { text-align:center; color:var(--text3); font-size:.78rem; margin:1rem 0; position:relative; }
+.auth-divider::before,.auth-divider::after { content:''; position:absolute; top:50%; width:calc(50% - 30px); height:1px; background:var(--border); }
+.auth-divider::before { left:0; }
+.auth-divider::after { right:0; }
+
+/* ===== DASHBOARD ===== */
+.dashboard-layout { display:grid; grid-template-columns:240px 1fr; min-height:calc(100vh - 64px); }
+.sidebar { background:var(--bg2); border-right:1px solid var(--border); padding:1.25rem .75rem; display:flex; flex-direction:column; gap:.25rem; }
+.sidebar-section { font-size:.7rem; color:var(--text3); text-transform:uppercase; letter-spacing:.07em; padding:.5rem .75rem; margin-top:.75rem; }
+.sidebar-item { display:flex; align-items:center; gap:.65rem; padding:.6rem .75rem; border-radius:8px; font-size:.85rem; cursor:pointer; transition:.15s; color:var(--text2); }
+.sidebar-item:hover { background:var(--surface); color:var(--text); }
+.sidebar-item.active { background:rgba(37,99,235,0.15); color:var(--blue2); border:1px solid rgba(37,99,235,0.2); }
+.sidebar-item .s-icon { font-size:16px; }
+.sidebar-badge { margin-left:auto; background:var(--blue); color:#fff; border-radius:100px; padding:.1rem .45rem; font-size:.65rem; font-weight:700; }
+
+.main-content { background:var(--bg); overflow-y:auto; }
+.top-bar { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.75rem; border-bottom:1px solid var(--border); }
+.page-title { font-family:var(--font2); font-size:1.2rem; font-weight:700; }
+.top-bar-right { display:flex; align-items:center; gap:.75rem; }
+.notif-btn { width:36px; height:36px; background:var(--surface); border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; position:relative; }
+.notif-dot { position:absolute; top:6px; right:6px; width:7px; height:7px; background:var(--red); border-radius:50%; border:1px solid var(--bg2); }
+.user-pill { display:flex; align-items:center; gap:.6rem; padding:.4rem .75rem; background:var(--surface); border:1px solid var(--border); border-radius:100px; cursor:pointer; font-size:.82rem; }
+.user-avatar { width:26px; height:26px; border-radius:50%; background:var(--grad1); display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; }
+
+.dashboard-body { padding:1.75rem; }
+
+/* KPI Cards */
+.kpi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+.kpi-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; position:relative; overflow:hidden; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:2px 2px 0 0; }
+.kpi-card.blue::before { background:var(--blue2); }
+.kpi-card.cyan::before { background:var(--cyan); }
+.kpi-card.green::before { background:var(--green); }
+.kpi-card.amber::before { background:var(--amber); }
+.kpi-card.purple::before { background:var(--purple); }
+.kpi-card.red::before { background:var(--red); }
+.kpi-label { font-size:.75rem; color:var(--text2); margin-bottom:.35rem; display:flex; align-items:center; justify-content:space-between; }
+.kpi-icon { font-size:14px; }
+.kpi-value { font-family:var(--font2); font-size:1.7rem; font-weight:800; }
+.kpi-change { font-size:.75rem; margin-top:.3rem; }
+.kpi-change.up { color:var(--green); }
+.kpi-change.down { color:var(--red); }
+
+/* Charts Area */
+.charts-row { display:grid; grid-template-columns:2fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+.chart-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; }
+.chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
+.chart-title { font-size:.9rem; font-weight:600; }
+.chart-tabs { display:flex; gap:.25rem; }
+.chart-tab { padding:.25rem .65rem; border-radius:6px; font-size:.75rem; cursor:pointer; color:var(--text3); transition:.15s; }
+.chart-tab.active { background:rgba(37,99,235,0.2); color:var(--blue2); }
+
+/* SVG Chart */
+.svg-chart { width:100%; }
+
+/* Donut Chart */
+.donut-center { text-anchor:middle; }
+
+/* Activity Feed */
+.activity-list { display:flex; flex-direction:column; gap:.75rem; }
+.activity-item { display:flex; align-items:center; gap:.75rem; padding:.65rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+.activity-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; color:#fff; flex-shrink:0; }
+.activity-info { flex:1; min-width:0; }
+.activity-name { font-size:.82rem; font-weight:600; }
+.activity-desc { font-size:.75rem; color:var(--text2); }
+.activity-amount { font-size:.85rem; font-weight:700; }
+.activity-amount.credit { color:var(--green); }
+.activity-amount.debit { color:var(--red); }
+.activity-time { font-size:.7rem; color:var(--text3); margin-top:2px; }
+
+/* Members Table */
+.table-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.table-header { padding:1rem 1.25rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.table-header h3 { font-size:.9rem; font-weight:600; }
+.search-box { display:flex; align-items:center; gap:.5rem; padding:.4rem .75rem; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:8px; }
+.search-box input { background:none; border:none; outline:none; color:var(--text); font-size:.8rem; width:160px; font-family:var(--font); }
+.search-box input::placeholder { color:var(--text3); }
+table { width:100%; border-collapse:collapse; }
+th { padding:.75rem 1.25rem; font-size:.75rem; font-weight:600; color:var(--text2); text-align:left; border-bottom:1px solid var(--border); background:rgba(255,255,255,0.02); }
+td { padding:.75rem 1.25rem; font-size:.82rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:rgba(255,255,255,0.02); }
+.status-pill { padding:.2rem .6rem; border-radius:100px; font-size:.7rem; font-weight:600; }
+.status-pill.active { background:rgba(16,185,129,0.15); color:var(--green); }
+.status-pill.pending { background:rgba(245,158,11,0.15); color:var(--amber); }
+.status-pill.inactive { background:rgba(239,68,68,0.1); color:var(--red); }
+.member-cell { display:flex; align-items:center; gap:.6rem; }
+.mini-avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:#fff; flex-shrink:0; }
+
+/* Contributions */
+.contrib-section { display:grid; grid-template-columns:1fr; gap:1rem; }
+.contrib-form-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; }
+.contrib-form-card h3 { font-size:.95rem; font-weight:600; margin-bottom:1.25rem; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+.form-select { width:100%; padding:.65rem .9rem; background:rgba(255,255,255,0.05); border:1px solid var(--border2); border-radius:8px; color:var(--text); font-size:.875rem; font-family:var(--font); outline:none; }
+.form-select option { background:var(--bg2); }
+.amount-input-wrap { position:relative; }
+.amount-prefix { position:absolute; left:.75rem; top:50%; transform:translateY(-50%); color:var(--text2); font-size:.875rem; }
+.amount-input-wrap .form-input { padding-left:2.2rem; }
+.progress-list { display:flex; flex-direction:column; gap:.75rem; }
+.progress-item { padding:.75rem; background:var(--bg2); border:1px solid var(--border); border-radius:8px; }
+.progress-item-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem; font-size:.82rem; }
+.progress-bar { height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:3px; transition:1s; }
+
+/* Events */
+.events-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+.event-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.event-banner { height:80px; display:flex; align-items:flex-end; padding:.75rem; }
+.event-tag { padding:.25rem .65rem; border-radius:100px; font-size:.7rem; font-weight:600; color:#fff; }
+.event-body { padding:1rem; }
+.event-title { font-size:.92rem; font-weight:700; margin-bottom:.25rem; }
+.event-meta { font-size:.78rem; color:var(--text2); margin-bottom:.75rem; }
+.event-progress { margin-bottom:.5rem; }
+.event-stats { display:flex; justify-content:space-between; font-size:.75rem; color:var(--text2); margin-bottom:.6rem; }
+.event-target { font-size:.82rem; font-weight:700; color:var(--green); }
+
+/* Live Display */
+.live-display { background:#000; min-height:calc(100vh - 64px); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem; text-align:center; position:relative; overflow:hidden; }
+.live-bg { position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 50% 50%, rgba(37,99,235,0.2) 0%, transparent 60%); animation:pulse 3s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+.live-badge { display:inline-flex; align-items:center; gap:.4rem; padding:.3rem .8rem; background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.4); border-radius:100px; font-size:.8rem; color:#f87171; margin-bottom:1.5rem; }
+.live-dot { width:8px; height:8px; background:var(--red); border-radius:50%; animation:pulse 1s ease-in-out infinite; }
+.live-event-title { font-family:var(--font2); font-size:clamp(1.5rem,4vw,2.8rem); font-weight:800; margin-bottom:.5rem; }
+.live-target { color:var(--text2); font-size:1rem; margin-bottom:2rem; }
+.live-raised { font-family:var(--font2); font-size:clamp(3rem,8vw,5rem); font-weight:800; background:linear-gradient(135deg,#60a5fa,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.5rem; }
+.live-pct { font-size:1.2rem; color:var(--green); font-weight:700; margin-bottom:2rem; }
+.live-bar-wrap { width:100%; max-width:600px; height:20px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; margin-bottom:2.5rem; }
+.live-bar { height:100%; background:linear-gradient(90deg,var(--blue2),var(--cyan)); border-radius:10px; transition:2s; }
+.live-contributors { display:flex; flex-direction:column; gap:.75rem; width:100%; max-width:600px; }
+.live-contrib-item { display:flex; align-items:center; justify-content:space-between; padding:.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; }
+.live-contrib-name { font-size:.9rem; font-weight:600; }
+.live-contrib-amt { font-size:1rem; font-weight:700; color:var(--green); }
+
+/* Reports */
+.reports-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-bottom:1.5rem; }
+.report-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; cursor:pointer; transition:.2s; }
+.report-card:hover { background:var(--surface2); transform:translateY(-1px); }
+.report-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:.75rem; }
+.report-card h3 { font-size:.9rem; font-weight:600; margin-bottom:.3rem; }
+.report-card p { font-size:.78rem; color:var(--text2); }
+
+/* Settings */
+.settings-layout { display:grid; grid-template-columns:200px 1fr; gap:1.5rem; }
+.settings-nav a { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem; border-radius:8px; font-size:.85rem; cursor:pointer; color:var(--text2); margin-bottom:.1rem; }
+.settings-nav a.active, .settings-nav a:hover { background:var(--surface); color:var(--text); }
+.settings-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1rem; }
+.settings-card h3 { font-size:.95rem; font-weight:600; margin-bottom:1rem; padding-bottom:.75rem; border-bottom:1px solid var(--border); }
+
+/* AI */
+.ai-section { background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(37,99,235,0.08)); border:1px solid rgba(139,92,246,0.2); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; }
+.ai-header { display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; }
+.ai-icon { width:36px; height:36px; background:linear-gradient(135deg,#7c3aed,#2563eb); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+.ai-title { font-size:.95rem; font-weight:700; }
+.ai-sub { font-size:.75rem; color:var(--purple); }
+.ai-insights { display:flex; flex-direction:column; gap:.5rem; }
+.ai-insight-item { display:flex; align-items:flex-start; gap:.5rem; font-size:.82rem; color:var(--text2); padding:.5rem; background:rgba(255,255,255,0.03); border-radius:8px; }
+.ai-insight-item .dot { width:6px; height:6px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+
+/* Responsive */
+@media(max-width:768px){
+  .features-grid,.pricing-grid,.stats-row,.kpi-grid,.charts-row,.events-grid,.reports-grid { grid-template-columns:1fr; }
+  .testimonials-grid { grid-template-columns:1fr; }
+  .dashboard-layout { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .form-row { grid-template-columns:1fr; }
+  .settings-layout { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+}
+
+/* Animations */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.page.active .hero { animation:fadeUp .5s ease; }
+.animate-in { animation:fadeUp .4s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="logo">
+    <div class="logo-icon">🌐</div>
+    CommunityPay
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('features')">Features</a>
+    <a onclick="showPage('pricing')">Pricing</a>
+    <a onclick="showPage('contact')">Contact</a>
+  </div>
+  <div class="nav-ctas">
+    <button class="btn btn-ghost" onclick="showPage('login')">Login</button>
+    <button class="btn btn-primary" onclick="showPage('register')">Get Started</button>
+  </div>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="page-home" class="page active">
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-badge">🚀 Trusted by 500+ organizations across Africa</div>
+    <h1>Manage Contributions, <span>Welfare & Community Growth</span> Efficiently</h1>
+    <p>The modern fintech platform built for churches, chamas, welfare groups, youth organizations, and community associations. Streamline every shilling, every member, every event.</p>
+    <div class="hero-ctas">
+      <button class="btn-hero btn-hero-primary" onclick="showPage('register')">Get Started Free →</button>
+      <button class="btn-hero btn-hero-outline" onclick="showPage('live')">📺 Live Demo</button>
+      <button class="btn-hero btn-hero-outline" onclick="showPage('login')">Login</button>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Organizations</div></div>
+      <div class="stat-card"><div class="stat-num">KSh 2B+</div><div class="stat-label">Processed</div></div>
+      <div class="stat-card"><div class="stat-num">50K+</div><div class="stat-label">Active Members</div></div>
+      <div class="stat-card"><div class="stat-num">99.9%</div><div class="stat-label">Uptime</div></div>
+    </div>
+  </section>
+
+  <div class="orgs-section">
+    <div class="orgs-label">Trusted by organizations of all types</div>
+    <div class="orgs-row">
+      <div class="org-chip">⛪ Churches</div>
+      <div class="org-chip">🤝 Chama Groups</div>
+      <div class="org-chip">🏫 School Clubs</div>
+      <div class="org-chip">👥 PMAK Chapters</div>
+      <div class="org-chip">💼 Welfare Groups</div>
+      <div class="org-chip">🌱 Youth Orgs</div>
+      <div class="org-chip">🎯 Fundraisers</div>
+      <div class="org-chip">🏆 Mentorship Groups</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-title">Everything your community needs</div>
+    <div class="section-sub">From contributions to welfare to fundraising — one platform for all financial operations</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-icon blue">💰</div>
+        <h3>Contribution Tracking</h3>
+        <p>Record and track every contribution with real-time balance updates, payment history, and automated receipts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon green">🏥</div>
+        <h3>Welfare Management</h3>
+        <p>Manage welfare fund disbursements, claims processing, and beneficiary tracking with full audit trails.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon cyan">🎯</div>
+        <h3>Fundraising Events</h3>
+        <p>Create events, set targets, and track progress in real-time with beautiful live display screens.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon purple">👥</div>
+        <h3>Member Management</h3>
+        <p>Complete member profiles, group assignments, attendance tracking, and contribution history.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon amber">📊</div>
+        <h3>Reports & Analytics</h3>
+        <p>Downloadable PDF reports, CSV exports, visual dashboards, and AI-powered financial insights.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon blue">📺</div>
+        <h3>Live Display Mode</h3>
+        <p>Project real-time contributions on a big screen during events. Auto-refreshing, visually impressive.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon cyan">🔔</div>
+        <h3>Smart Notifications</h3>
+        <p>Automated reminders for due contributions, upcoming events, and welfare disbursement updates.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon green">🤖</div>
+        <h3>AI Insights</h3>
+        <p>Smart financial predictions, anomaly detection, and AI-generated summaries for better decisions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon purple">📱</div>
+        <h3>Mobile Accessible</h3>
+        <p>Fully responsive design that works beautifully on phones, tablets, and desktops.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Loved by community leaders</div>
+    <div class="section-sub">Join hundreds of organizations already transforming their financial management</div>
+    <div class="testimonials-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"CommunityPay transformed how we manage our church harambee. Real-time displays during fundraisers are absolutely amazing. Our collections have increased by 40%."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--grad1)">MW</div>
+          <div><div class="testi-name">Pastor Mary Wanjiku</div><div class="testi-role">Nairobi Grace Fellowship</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Our chama used to struggle with manual records. Now every member can see their balance anytime. The welfare management module is exactly what we needed."</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#059669,#06b6d4)">JK</div>
+          <div><div class="testi-name">James Kamau</div><div class="testi-role">Westlands Chama Group</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Running fundraising events for our PMAK chapter has never been easier. The live display screen keeps donors motivated. Raised 3x our target at our last event!"</div>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#7c3aed,#2563eb)">SA</div>
+          <div><div class="testi-name">Sarah Achieng</div><div class="testi-role">PMAK Kisumu Chapter</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <div class="cta-box">
+      <h2>Ready to modernize your community?</h2>
+      <p>Join 500+ organizations already using CommunityPay. Free plan available. No credit card required.</p>
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-hero btn-hero-primary" onclick="showPage('register')">Start Free Today →</button>
+        <button class="btn-hero btn-hero-outline" onclick="showPage('pricing')">See Pricing</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="logo"><div class="logo-icon" style="width:26px;height:26px;font-size:12px;">🌐</div>CommunityPay</div>
+    <p style="color:var(--text3);font-size:.78rem;">© 2025 CommunityPay. Built for Africa's communities.</p>
+    <div class="footer-links">
+      <a>Privacy</a><a>Terms</a><a>Support</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ===== FEATURES PAGE ===== -->
+<div id="page-features" class="page">
+  <section class="hero" style="padding:3rem 2rem 2rem;">
+    <div class="hero-bg"></div>
+    <h1>Powerful Features for <span>Every Organization</span></h1>
+    <p>Everything you need to manage contributions, welfare, and community finances — in one modern platform.</p>
+  </section>
+  <section class="section">
+    <div class="features-grid">
+      <div class="feature-card"><div class="feat-icon blue">💰</div><h3>Contribution Tracking</h3><p>Record contributions by category, track payment methods, generate receipts, monitor balances in real-time with full history.</p></div>
+      <div class="feature-card"><div class="feat-icon green">🏥</div><h3>Welfare Management</h3><p>Manage claims, disbursements, beneficiaries, and welfare fund balances. Full audit trail and approval workflows.</p></div>
+      <div class="feature-card"><div class="feat-icon cyan">🎯</div><h3>Fundraising Events</h3><p>Create events with targets, track contributions, display live progress, manage expenses, and generate event reports.</p></div>
+      <div class="feature-card"><div class="feat-icon purple">👥</div><h3>Member Profiles</h3><p>Complete member records with photos, contribution history, welfare records, group assignments, and attendance.</p></div>
+      <div class="feature-card"><div class="feat-icon amber">📊</div><h3>Financial Reports</h3><p>PDF and CSV exports, monthly summaries, event performance, member statements, and trend analysis.</p></div>
+      <div class="feature-card"><div class="feat-icon blue">📺</div><h3>Live Display Screen</h3><p>Projector-ready screen showing real-time contributions during events. Auto-refreshes every few seconds.</p></div>
+      <div class="feature-card"><div class="feat-icon green">🔒</div><h3>Role-Based Access</h3><p>Admin, Treasurer, Secretary, and Member roles with granular permissions. JWT-secured authentication.</p></div>
+      <div class="feature-card"><div class="feat-icon cyan">🔔</div><h3>Smart Notifications</h3><p>Automated WhatsApp/SMS/Email reminders for contribution due dates, event updates, and welfare approvals.</p></div>
+      <div class="feature-card"><div class="feat-icon purple">🤖</div><h3>AI Insights</h3><p>Predictive analytics, contribution trend forecasting, anomaly detection, and AI-generated financial summaries.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PRICING PAGE ===== -->
+<div id="page-pricing" class="page">
+  <section class="hero" style="padding:3rem 2rem 2rem;">
+    <div class="hero-bg"></div>
+    <h1>Simple, <span>Transparent Pricing</span></h1>
+    <p>Choose the plan that fits your organization. All plans include a 30-day free trial.</p>
+  </section>
+  <section class="section">
+    <div class="pricing-toggle">
+      <span class="toggle-label">Monthly</span>
+      <div class="toggle-switch" id="billing-toggle" onclick="toggleBilling()"></div>
+      <span class="toggle-label">Yearly</span>
+      <span class="badge-save">Save 20%</span>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price" id="price-starter">KSh 0<span>/mo</span></div>
+        <div class="plan-desc">Perfect for small groups and getting started</div>
+        <ul class="plan-features">
+          <li>Up to 30 members</li>
+          <li>Basic contribution tracking</li>
+          <li>1 active fundraising event</li>
+          <li>PDF reports</li>
+          <li>Email notifications</li>
+          <li class="no">Welfare management</li>
+          <li class="no">Live display mode</li>
+          <li class="no">AI insights</li>
+        </ul>
+        <button class="btn btn-ghost" style="width:100%" onclick="showPage('register')">Get Started Free</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Community</div>
+        <div class="plan-price" id="price-community">KSh 2,500<span>/mo</span></div>
+        <div class="plan-desc">For growing organizations that need full power</div>
+        <ul class="plan-features">
+          <li>Up to 500 members</li>
+          <li>Full contribution management</li>
+          <li>Unlimited fundraising events</li>
+          <li>Welfare management module</li>
+          <li>Live display mode</li>
+          <li>PDF + CSV reports</li>
+          <li>Smart notifications</li>
+          <li class="no">AI insights</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%" onclick="showPage('register')">Start Free Trial</button>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" id="price-enterprise">Custom<span></span></div>
+        <div class="plan-desc">For large organizations with advanced needs</div>
+        <ul class="plan-features">
+          <li>Unlimited members</li>
+          <li>All Community features</li>
+          <li>AI insights & predictions</li>
+          <li>Custom branding & domain</li>
+          <li>M-Pesa / Bank integration</li>
+          <li>Dedicated account manager</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <button class="btn btn-ghost" style="width:100%">Contact Sales</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div id="page-contact" class="page">
+  <section class="hero" style="padding:3rem 2rem 2rem;">
+    <div class="hero-bg"></div>
+    <h1>Get in <span>Touch</span></h1>
+    <p>Have questions? Our team is ready to help you get started or answer any queries.</p>
+  </section>
+  <section class="section" style="max-width:700px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:1.5rem;">
+      <h3 style="font-size:1rem;font-weight:700;margin-bottom:1.25rem;">Send us a message</h3>
+      <div class="form-row" style="margin-bottom:.75rem;">
+        <div class="form-group" style="margin:0"><label class="form-label">Full Name</label><input class="form-input" placeholder="Your name"></div>
+        <div class="form-group" style="margin:0"><label class="form-label">Email</label><input class="form-input" placeholder="you@example.com"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Subject</label><input class="form-input" placeholder="How can we help?"></div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" rows="4" placeholder="Your message..." style="resize:vertical;"></textarea></div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:.5rem;">📧</div><div style="font-size:.85rem;font-weight:600;margin-bottom:.25rem;">Email</div><div style="font-size:.8rem;color:var(--text2);">hello@communitypay.co.ke</div></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;"><div style="font-size:1.5rem;margin-bottom:.5rem;">📞</div><div style="font-size:.85rem;font-weight:600;margin-bottom:.25rem;">Phone</div><div style="font-size:.8rem;color:var(--text2);">+254 700 000 000</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div id="page-login" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">🌐</div>
+        <h2>Welcome back</h2>
+        <p>Sign in to your organization account</p>
+      </div>
+      <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" type="email" placeholder="you@example.com"></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" placeholder="Your password"></div>
+      <button class="form-submit" onclick="showPage('dashboard')">Sign In →</button>
+      <div class="auth-divider">or continue with</div>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:.5rem;">🔑 Google SSO</button>
+      <div class="auth-footer">Don't have an account? <a onclick="showPage('register')">Create one free</a></div>
+      <div style="text-align:center;margin-top:.5rem;"><a style="font-size:.78rem;color:var(--text3);cursor:pointer;">Forgot password?</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGISTER PAGE ===== -->
+<div id="page-register" class="page">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">🌐</div>
+        <h2>Create Account</h2>
+        <p>Set up your organization for free</p>
+      </div>
+      <div class="form-row" style="margin-bottom:.75rem;">
+        <div style="margin:0"><label class="form-label">First Name</label><input class="form-input" placeholder="First name"></div>
+        <div style="margin:0"><label class="form-label">Last Name</label><input class="form-input" placeholder="Last name"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="you@example.com"></div>
+      <div class="form-group"><label class="form-label">Organization Name</label><input class="form-input" placeholder="e.g. Westlands Chama Group"></div>
+      <div class="form-group"><label class="form-label">Organization Type</label>
+        <select class="form-select"><option>Church</option><option>Chama Group</option><option>Welfare Group</option><option>School Club</option><option>PMAK Chapter</option><option>Youth Organization</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" type="password" placeholder="Create a strong password"></div>
+      <button class="form-submit" onclick="showPage('dashboard')">Create Organization →</button>
+      <div class="auth-footer">Already have an account? <a onclick="showPage('login')">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-item active" onclick="showDash('overview')">
+        <span class="s-icon">📊</span> Overview
+      </div>
+      <div class="sidebar-item" onclick="showDash('members')">
+        <span class="s-icon">👥</span> Members
+        <span class="sidebar-badge">148</span>
+      </div>
+      <div class="sidebar-item" onclick="showDash('contributions')">
+        <span class="s-icon">💰</span> Contributions
+      </div>
+      <div class="sidebar-item" onclick="showPage('events')">
+        <span class="s-icon">🎯</span> Events
+      </div>
+      <div class="sidebar-item" onclick="showPage('live')">
+        <span class="s-icon">📺</span> Live Display
+      </div>
+      <div class="sidebar-section">Reports</div>
+      <div class="sidebar-item" onclick="showDash('reports')">
+        <span class="s-icon">📄</span> Reports
+      </div>
+      <div class="sidebar-item" onclick="showDash('analytics')">
+        <span class="s-icon">📈</span> Analytics
+      </div>
+      <div class="sidebar-section">Admin</div>
+      <div class="sidebar-item" onclick="showDash('settings')">
+        <span class="s-icon">⚙️</span> Settings
+      </div>
+      <div class="sidebar-item" onclick="showPage('home')" style="margin-top:auto;color:var(--text3);">
+        <span class="s-icon">🚪</span> Logout
+      </div>
+    </aside>
+    <div class="main-content">
+      <div class="top-bar">
+        <div class="page-title" id="dash-title">Dashboard Overview</div>
+        <div class="top-bar-right">
+          <div class="notif-btn">🔔<div class="notif-dot"></div></div>
+          <button class="btn btn-primary btn-sm">+ Quick Add</button>
+          <div class="user-pill">
+            <div class="user-avatar">JK</div>
+            James K. ▾
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-body" id="dash-body">
+        <!-- Dynamic content loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EVENTS PAGE ===== -->
+<div id="page-events" class="page">
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-item" onclick="showPage('dashboard')"><span class="s-icon">📊</span> Overview</div>
+      <div class="sidebar-item active"><span class="s-icon">🎯</span> Events</div>
+      <div class="sidebar-item" onclick="showPage('live')"><span class="s-icon">📺</span> Live Display</div>
+    </aside>
+    <div class="main-content">
+      <div class="top-bar">
+        <div class="page-title">Fundraising Events</div>
+        <div class="top-bar-right">
+          <button class="btn btn-primary btn-sm">+ Create Event</button>
+          <div class="user-pill"><div class="user-avatar">JK</div> James K. ▾</div>
+        </div>
+      </div>
+      <div class="dashboard-body">
+        <div class="events-grid">
+          <div class="event-card">
+            <div class="event-banner" style="background:linear-gradient(135deg,#1e40af,#0891b2);">
+              <span class="event-tag" style="background:rgba(16,185,129,0.8)">Active</span>
+            </div>
+            <div class="event-body">
+              <div class="event-title">Annual Harambee 2025</div>
+              <div class="event-meta">📅 June 15, 2025 · 👥 148 members</div>
+              <div class="event-progress">
+                <div class="event-stats">
+                  <span>KSh 187,500 raised</span>
+                  <span class="event-target">Target: KSh 300,000</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:62.5%;background:linear-gradient(90deg,var(--blue2),var(--cyan));"></div></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:.78rem;color:var(--green);font-weight:600;">62.5% complete</span>
+                <div style="display:flex;gap:.5rem;">
+                  <button class="btn btn-ghost btn-sm" onclick="showPage('live')">📺 Live</button>
+                  <button class="btn btn-primary btn-sm">Manage</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-banner" style="background:linear-gradient(135deg,#7c3aed,#1e40af);">
+              <span class="event-tag" style="background:rgba(245,158,11,0.8)">Planning</span>
+            </div>
+            <div class="event-body">
+              <div class="event-title">Welfare Fund Drive Q3</div>
+              <div class="event-meta">📅 August 3, 2025 · 👥 148 members</div>
+              <div class="event-progress">
+                <div class="event-stats">
+                  <span>KSh 0 raised</span>
+                  <span class="event-target">Target: KSh 150,000</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:0%;background:linear-gradient(90deg,var(--purple),var(--blue2));"></div></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:.78rem;color:var(--amber);font-weight:600;">Not started yet</span>
+                <button class="btn btn-primary btn-sm">Configure</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-banner" style="background:linear-gradient(135deg,#065f46,#0891b2);">
+              <span class="event-tag" style="background:rgba(107,114,128,0.8)">Completed</span>
+            </div>
+            <div class="event-body">
+              <div class="event-title">Christmas Charity Drive</div>
+              <div class="event-meta">📅 Dec 20, 2024 · 👥 132 members</div>
+              <div class="event-progress">
+                <div class="event-stats">
+                  <span>KSh 245,000 raised</span>
+                  <span class="event-target">Target: KSh 200,000</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--green),#22d3ee);"></div></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:.78rem;color:var(--green);font-weight:600;">✓ 122.5% — exceeded!</span>
+                <button class="btn btn-ghost btn-sm">View Report</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-card" style="border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;min-height:220px;cursor:pointer;border-radius:14px;background:transparent;">
+            <div style="text-align:center;color:var(--text3);">
+              <div style="font-size:2rem;margin-bottom:.5rem;">+</div>
+              <div style="font-size:.85rem;font-weight:600;">Create New Event</div>
+              <div style="font-size:.75rem;margin-top:.25rem;">Set targets, invite contributors</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LIVE DISPLAY PAGE ===== -->
+<div id="page-live" class="page">
+  <div class="live-display">
+    <div class="live-bg"></div>
+    <div style="position:relative;z-index:1;width:100%;max-width:700px;text-align:center;">
+      <div class="live-badge"><div class="live-dot"></div> LIVE</div>
+      <div class="live-event-title">Annual Harambee 2025</div>
+      <div class="live-target">Target: KSh 300,000 · Westlands Community Church</div>
+      <div class="live-raised" id="live-amount">KSh 187,500</div>
+      <div class="live-pct" id="live-pct">62.5% of target reached</div>
+      <div class="live-bar-wrap"><div class="live-bar" id="live-bar" style="width:62.5%"></div></div>
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;font-weight:600;">🏆 Recent Contributors</div>
+      <div class="live-contributors" id="live-feed">
+        <div class="live-contrib-item"><div class="live-contrib-name">💎 Deacon Peter Mwangi</div><div class="live-contrib-amt">KSh 15,000</div></div>
+        <div class="live-contrib-item"><div class="live-contrib-name">🌟 Sister Grace Otieno</div><div class="live-contrib-amt">KSh 10,000</div></div>
+        <div class="live-contrib-item"><div class="live-contrib-name">✨ Brother David Mutua</div><div class="live-contrib-amt">KSh 7,500</div></div>
+        <div class="live-contrib-item"><div class="live-contrib-name">⭐ Anonymous</div><div class="live-contrib-amt">KSh 5,000</div></div>
+      </div>
+      <button class="btn btn-ghost" style="margin-top:2rem;" onclick="showPage('events')">← Back to Events</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Page navigation
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) { target.classList.add('active'); window.scrollTo(0,0); }
+  if (page === 'dashboard') { showDash('overview'); }
+}
+
+// Billing toggle
+let isYearly = false;
+function toggleBilling() {
+  isYearly = !isYearly;
+  const t = document.getElementById('billing-toggle');
+  t.classList.toggle('yearly', isYearly);
+  document.getElementById('price-starter').innerHTML = 'KSh 0<span>/mo</span>';
+  document.getElementById('price-community').innerHTML = (isYearly ? 'KSh 2,000' : 'KSh 2,500') + '<span>/mo</span>';
+  document.getElementById('price-enterprise').innerHTML = 'Custom<span></span>';
+}
+
+// Dashboard sections
+function showDash(section) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  const body = document.getElementById('dash-body');
+  const title = document.getElementById('dash-title');
+
+  if (section === 'overview') {
+    title.textContent = 'Dashboard Overview';
+    body.innerHTML = `
+      <div class="ai-section">
+        <div class="ai-header">
+          <div class="ai-icon">🤖</div>
+          <div><div class="ai-title">AI Financial Insights</div><div class="ai-sub">Powered by CommunityPay Intelligence</div></div>
+        </div>
+        <div class="ai-insights">
+          <div class="ai-insight-item"><div class="dot" style="background:var(--green)"></div>Contribution rate is up 18% this month compared to last month. Strong engagement from senior members.</div>
+          <div class="ai-insight-item"><div class="dot" style="background:var(--amber)"></div>12 members have pending contributions for June. Consider sending a reminder before the 15th.</div>
+          <div class="ai-insight-item"><div class="dot" style="background:var(--blue2)"></div>At the current pace, your Harambee event will reach its target 3 days ahead of schedule.</div>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card blue"><div class="kpi-label">Total Contributions<span class="kpi-icon">💰</span></div><div class="kpi-value">KSh 487,200</div><div class="kpi-change up">↑ 18.2% from last month</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Welfare Fund<span class="kpi-icon">🏥</span></div><div class="kpi-value">KSh 125,000</div><div class="kpi-change up">↑ 5.4% growth</div></div>
+        <div class="kpi-card cyan"><div class="kpi-label">Active Events<span class="kpi-icon">🎯</span></div><div class="kpi-value">2 Events</div><div class="kpi-change up">1 new this month</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">Pending Balances<span class="kpi-icon">⏳</span></div><div class="kpi-value">KSh 34,800</div><div class="kpi-change down">↑ 12 members overdue</div></div>
+        <div class="kpi-card purple"><div class="kpi-label">Total Members<span class="kpi-icon">👥</span></div><div class="kpi-value">148 Members</div><div class="kpi-change up">↑ 6 new this month</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Monthly Growth<span class="kpi-icon">📈</span></div><div class="kpi-value">+18.2%</div><div class="kpi-change up">↑ Best month in 2025</div></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Contribution Trends</div>
+            <div class="chart-tabs">
+              <div class="chart-tab active">6M</div>
+              <div class="chart-tab">1Y</div>
+              <div class="chart-tab">All</div>
+            </div>
+          </div>
+          <svg class="svg-chart" viewBox="0 0 420 160">
+            <defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></linearGradient></defs>
+            <path d="M20,130 L80,110 L140,95 L200,75 L260,80 L320,55 L400,30" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M20,130 L80,110 L140,95 L200,75 L260,80 L320,55 L400,30 L400,155 L20,155Z" fill="url(#chartGrad)"/>
+            <circle cx="400" cy="30" r="5" fill="#3b82f6"/>
+            <text x="400" y="22" fill="#3b82f6" font-size="11" text-anchor="middle" font-family="DM Sans">487K</text>
+            <line x1="20" y1="155" x2="400" y2="155" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <text x="20" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">Jan</text>
+            <text x="80" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">Feb</text>
+            <text x="140" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">Mar</text>
+            <text x="200" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">Apr</text>
+            <text x="260" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">May</text>
+            <text x="320" y="168" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">Jun</text>
+          </svg>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header"><div class="chart-title">By Category</div></div>
+          <svg class="svg-chart" viewBox="0 0 200 160">
+            <circle cx="100" cy="75" r="55" fill="none" stroke="#1e40af" stroke-width="18"/>
+            <circle cx="100" cy="75" r="55" fill="none" stroke="#06b6d4" stroke-width="18" stroke-dasharray="86 259" stroke-dashoffset="-48"/>
+            <circle cx="100" cy="75" r="55" fill="none" stroke="#10b981" stroke-width="18" stroke-dasharray="52 259" stroke-dashoffset="-134"/>
+            <circle cx="100" cy="75" r="55" fill="none" stroke="#8b5cf6" stroke-width="18" stroke-dasharray="34 259" stroke-dashoffset="-186"/>
+            <text x="100" y="70" fill="#f0f4ff" font-size="18" font-weight="700" text-anchor="middle" font-family="Syne">KSh</text>
+            <text x="100" y="88" fill="#8a9bc4" font-size="10" text-anchor="middle" font-family="DM Sans">487,200</text>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:.3rem;margin-top:-.5rem;">
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text2);"><div style="width:10px;height:10px;border-radius:50%;background:#1e40af;flex-shrink:0;"></div>Monthly (52%)</div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text2);"><div style="width:10px;height:10px;border-radius:50%;background:#06b6d4;flex-shrink:0;"></div>Events (33%)</div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text2);"><div style="width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;"></div>Welfare (10%)</div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text2);"><div style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;flex-shrink:0;"></div>Special (5%)</div>
+          </div>
+        </div>
+      </div>
+      <div class="charts-row" style="grid-template-columns:1fr 1fr;">
+        <div class="chart-card">
+          <div class="chart-header"><div class="chart-title">Recent Activity</div></div>
+          <div class="activity-list">
+            <div class="activity-item"><div class="activity-avatar" style="background:var(--grad1)">PM</div><div class="activity-info"><div class="activity-name">Peter Mwangi</div><div class="activity-desc">Monthly contribution</div><div class="activity-time">2 mins ago</div></div><div style="text-align:right;"><div class="activity-amount credit">+KSh 2,000</div></div></div>
+            <div class="activity-item"><div class="activity-avatar" style="background:linear-gradient(135deg,#059669,#06b6d4)">GO</div><div class="activity-info"><div class="activity-name">Grace Otieno</div><div class="activity-desc">Harambee contribution</div><div class="activity-time">15 mins ago</div></div><div style="text-align:right;"><div class="activity-amount credit">+KSh 5,000</div></div></div>
+            <div class="activity-item"><div class="activity-avatar" style="background:linear-gradient(135deg,#7c3aed,#db2777)">WN</div><div class="activity-info"><div class="activity-name">Welfare Fund</div><div class="activity-desc">Disbursement to J. Ochieng</div><div class="activity-time">1 hr ago</div></div><div style="text-align:right;"><div class="activity-amount debit">-KSh 8,000</div></div></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header"><div class="chart-title">Event Progress</div></div>
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-item-header"><span style="font-weight:600;">Annual Harambee 2025</span><span style="color:var(--green);font-weight:700;">62.5%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:62.5%;background:linear-gradient(90deg,var(--blue2),var(--cyan))"></div></div>
+              <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem;">KSh 187,500 / KSh 300,000</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-item-header"><span style="font-weight:600;">Christmas Drive 2024</span><span style="color:var(--green);font-weight:700;">100%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--green),#22d3ee)"></div></div>
+              <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem;">KSh 245,000 / KSh 200,000 ✓</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-item-header"><span style="font-weight:600;">Welfare Q3 Fund</span><span style="color:var(--amber);font-weight:700;">0%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--purple)"></div></div>
+              <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem;">KSh 0 / KSh 150,000 · Not started</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (section === 'members') {
+    title.textContent = 'Member Management';
+    body.innerHTML = `
+      <div style="display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm">+ Add Member</button>
+        <button class="btn btn-ghost btn-sm">📤 Export CSV</button>
+        <button class="btn btn-ghost btn-sm">📧 Send Reminder</button>
+        <select class="form-select" style="padding:.35rem .75rem;font-size:.8rem;border-radius:8px;width:auto;"><option>All Groups</option><option>Deacons</option><option>Youth</option><option>Women's Guild</option></select>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <h3>All Members (148)</h3>
+          <div class="search-box">🔍 <input placeholder="Search members..."></div>
+        </div>
+        <table>
+          <thead><tr><th>Member</th><th>Role</th><th>Contributions</th><th>Balance</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td><div class="member-cell"><div class="mini-avatar" style="background:var(--grad1)">PM</div><div><div style="font-weight:600;">Peter Mwangi</div><div style="font-size:.73rem;color:var(--text3);">peter@email.com</div></div></div></td><td>Deacon</td><td>KSh 48,000</td><td style="color:var(--green);font-weight:600;">KSh 0</td><td><span class="status-pill active">Active</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+            <tr><td><div class="member-cell"><div class="mini-avatar" style="background:linear-gradient(135deg,#059669,#06b6d4)">GO</div><div><div style="font-weight:600;">Grace Otieno</div><div style="font-size:.73rem;color:var(--text3);">grace@email.com</div></div></div></td><td>Secretary</td><td>KSh 36,000</td><td style="color:var(--green);font-weight:600;">KSh 0</td><td><span class="status-pill active">Active</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+            <tr><td><div class="member-cell"><div class="mini-avatar" style="background:linear-gradient(135deg,#7c3aed,#1e40af)">DM</div><div><div style="font-weight:600;">David Mutua</div><div style="font-size:.73rem;color:var(--text3);">david@email.com</div></div></div></td><td>Member</td><td>KSh 24,000</td><td style="color:var(--amber);font-weight:600;">KSh 2,000</td><td><span class="status-pill pending">Pending</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+            <tr><td><div class="member-cell"><div class="mini-avatar" style="background:linear-gradient(135deg,#b45309,#d97706)">AK</div><div><div style="font-weight:600;">Agnes Kamau</div><div style="font-size:.73rem;color:var(--text3);">agnes@email.com</div></div></div></td><td>Member</td><td>KSh 18,000</td><td style="color:var(--red);font-weight:600;">KSh 4,000</td><td><span class="status-pill inactive">Overdue</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+            <tr><td><div class="member-cell"><div class="mini-avatar" style="background:linear-gradient(135deg,#065f46,#059669)">JO</div><div><div style="font-weight:600;">James Ochieng</div><div style="font-size:.73rem;color:var(--text3);">james@email.com</div></div></div></td><td>Treasurer</td><td>KSh 60,000</td><td style="color:var(--green);font-weight:600;">KSh 0</td><td><span class="status-pill active">Active</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+          </tbody>
+        </table>
+        <div style="padding:.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);">
+          <span style="font-size:.78rem;color:var(--text3);">Showing 5 of 148 members</span>
+          <div style="display:flex;gap:.35rem;">
+            <button class="btn btn-ghost btn-sm">← Prev</button>
+            <button class="btn btn-primary btn-sm">Next →</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (section === 'contributions') {
+    title.textContent = 'Contribution Management';
+    body.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:1rem;">
+        <div class="contrib-form-card">
+          <h3>Record Contribution</h3>
+          <div class="form-group"><label class="form-label">Member</label><select class="form-select"><option>Select member...</option><option>Peter Mwangi</option><option>Grace Otieno</option><option>David Mutua</option></select></div>
+          <div class="form-group"><label class="form-label">Category</label><select class="form-select"><option>Monthly Contribution</option><option>Harambee</option><option>Welfare Fund</option><option>Special Collection</option></select></div>
+          <div class="form-group"><label class="form-label">Amount (KSh)</label><div class="amount-input-wrap"><span class="amount-prefix">KSh</span><input class="form-input" type="number" placeholder="0.00"></div></div>
+          <div class="form-group"><label class="form-label">Payment Method</label><select class="form-select"><option>M-Pesa</option><option>Bank Transfer</option><option>Cash</option><option>Cheque</option></select></div>
+          <div class="form-group"><label class="form-label">Reference / Transaction ID</label><input class="form-input" placeholder="e.g. QHE7XXXXXX"></div>
+          <div class="form-group"><label class="form-label">Notes (optional)</label><input class="form-input" placeholder="Any notes..."></div>
+          <button class="form-submit">Record Contribution ✓</button>
+        </div>
+        <div>
+          <div class="table-card" style="margin-bottom:1rem;">
+            <div class="table-header"><h3>Recent Contributions</h3><div class="search-box">🔍 <input placeholder="Search..."></div></div>
+            <table>
+              <thead><tr><th>Member</th><th>Category</th><th>Amount</th><th>Method</th><th>Date</th><th>Receipt</th></tr></thead>
+              <tbody>
+                <tr><td>Peter Mwangi</td><td>Monthly</td><td style="color:var(--green);font-weight:600;">KSh 2,000</td><td>M-Pesa</td><td>Today</td><td><button class="btn btn-ghost btn-sm">📄</button></td></tr>
+                <tr><td>Grace Otieno</td><td>Harambee</td><td style="color:var(--green);font-weight:600;">KSh 5,000</td><td>M-Pesa</td><td>Today</td><td><button class="btn btn-ghost btn-sm">📄</button></td></tr>
+                <tr><td>David Mutua</td><td>Monthly</td><td style="color:var(--green);font-weight:600;">KSh 2,000</td><td>Cash</td><td>Jun 12</td><td><button class="btn btn-ghost btn-sm">📄</button></td></tr>
+                <tr><td>Agnes Kamau</td><td>Monthly</td><td style="color:var(--amber);font-weight:600;">KSh 1,000</td><td>Bank</td><td>Jun 10</td><td><button class="btn btn-ghost btn-sm">📄</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
+            <div class="kpi-card blue"><div class="kpi-label">This Month</div><div class="kpi-value" style="font-size:1.3rem;">KSh 87,500</div><div class="kpi-change up">↑ 18.2%</div></div>
+            <div class="kpi-card green"><div class="kpi-label">Collected Today</div><div class="kpi-value" style="font-size:1.3rem;">KSh 7,000</div><div class="kpi-change up">2 payments</div></div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  else if (section === 'reports') {
+    title.textContent = 'Reports & Exports';
+    body.innerHTML = `
+      <div class="reports-grid">
+        <div class="report-card"><div class="report-icon" style="background:rgba(37,99,235,0.15);">📊</div><h3>Monthly Financial Report</h3><p>Full income and expense summary with charts and member breakdown. June 2025.</p><div style="display:flex;gap:.5rem;margin-top:.75rem;"><button class="btn btn-primary btn-sm">📥 PDF</button><button class="btn btn-ghost btn-sm">📋 CSV</button></div></div>
+        <div class="report-card"><div class="report-icon" style="background:rgba(16,185,129,0.15);">🏥</div><h3>Welfare Fund Report</h3><p>Disbursements, claims, balances, and beneficiary report with audit trail.</p><div style="display:flex;gap:.5rem;margin-top:.75rem;"><button class="btn btn-primary btn-sm">📥 PDF</button><button class="btn btn-ghost btn-sm">📋 CSV</button></div></div>
+        <div class="report-card"><div class="report-icon" style="background:rgba(245,158,11,0.15);">🎯</div><h3>Event Performance Report</h3><p>Fundraising event analytics, contributor list, and goal achievement breakdown.</p><div style="display:flex;gap:.5rem;margin-top:.75rem;"><button class="btn btn-primary btn-sm">📥 PDF</button><button class="btn btn-ghost btn-sm">📋 CSV</button></div></div>
+        <div class="report-card"><div class="report-icon" style="background:rgba(139,92,246,0.15);">👤</div><h3>Member Statements</h3><p>Individual contribution history and balance statements for all members or specific member.</p><div style="display:flex;gap:.5rem;margin-top:.75rem;"><button class="btn btn-primary btn-sm">📥 PDF</button><button class="btn btn-ghost btn-sm">📋 CSV</button></div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div class="chart-title">Annual Financial Overview — 2025</div></div>
+        <svg class="svg-chart" viewBox="0 0 600 160">
+          <defs><linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#1e40af"/></linearGradient></defs>
+          ${['Jan','Feb','Mar','Apr','May','Jun'].map((m,i) => {
+            const h = [60,72,68,95,88,115][i];
+            const x = 40 + i*92;
+            return `<rect x="${x}" y="${145-h}" width="40" height="${h}" rx="4" fill="url(#barGrad1)" opacity="${0.6+i*0.07}"/>
+            <text x="${x+20}" y="155" fill="#5a6e99" font-size="10" text-anchor="middle" font-family="DM Sans">${m}</text>`;
+          }).join('')}
+        </svg>
+      </div>`;
+  }
+
+  else if (section === 'settings') {
+    title.textContent = 'Organization Settings';
+    body.innerHTML = `
+      <div class="settings-layout">
+        <div class="settings-nav">
+          <a class="active">🏢 Organization</a>
+          <a>👥 Roles & Permissions</a>
+          <a>💰 Categories</a>
+          <a>🔔 Notifications</a>
+          <a>🎨 Branding</a>
+          <a>🔒 Security</a>
+        </div>
+        <div>
+          <div class="settings-card">
+            <h3>Organization Details</h3>
+            <div class="form-row"><div class="form-group"><label class="form-label">Organization Name</label><input class="form-input" value="Westlands Community Church"></div><div class="form-group"><label class="form-label">Type</label><select class="form-select"><option selected>Church</option></select></div></div>
+            <div class="form-row"><div class="form-group"><label class="form-label">Contact Email</label><input class="form-input" value="info@westlandschurch.co.ke"></div><div class="form-group"><label class="form-label">Phone</label><input class="form-input" value="+254 700 000 000"></div></div>
+            <div class="form-group"><label class="form-label">Location</label><input class="form-input" value="Westlands, Nairobi"></div>
+            <button class="btn btn-primary">Save Changes</button>
+          </div>
+          <div class="settings-card">
+            <h3>Contribution Categories</h3>
+            <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;">
+              ${['Monthly Contribution','Harambee Fund','Welfare Fund','Special Collection','Building Fund'].map(c => `<div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:.83rem;">${c}<button class="btn btn-ghost btn-sm" style="padding:.25rem .5rem;">Edit</button></div>`).join('')}
+            </div>
+            <button class="btn btn-ghost btn-sm">+ Add Category</button>
+          </div>
+        </div>
+      </div>`;
+  }
+  else if (section === 'analytics') {
+    title.textContent = 'Analytics & Insights';
+    body.innerHTML = `
+      <div class="ai-section" style="margin-bottom:1.5rem;">
+        <div class="ai-header"><div class="ai-icon">🤖</div><div><div class="ai-title">AI-Powered Financial Intelligence</div><div class="ai-sub">Predictive analytics · Anomaly detection · Trend forecasting</div></div></div>
+        <div class="ai-insights">
+          <div class="ai-insight-item"><div class="dot" style="background:var(--green)"></div><strong>Trend:</strong> Contributions peak on last Friday of each month. Schedule event contributions accordingly.</div>
+          <div class="ai-insight-item"><div class="dot" style="background:var(--amber)"></div><strong>Anomaly:</strong> Member John Doe's contribution pattern changed — usually KSh 2,000/month, this month KSh 500.</div>
+          <div class="ai-insight-item"><div class="dot" style="background:var(--blue2)"></div><strong>Forecast:</strong> At current growth rate, total contributions will exceed KSh 600,000 by August 2025.</div>
+          <div class="ai-insight-item"><div class="dot" style="background:var(--purple)"></div><strong>Insight:</strong> 85% of welfare requests are approved within 48 hours. Top performers: Treasurer and Secretary.</div>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card blue"><div class="kpi-label">Contribution Rate</div><div class="kpi-value">91.2%</div><div class="kpi-change up">↑ Of members active</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Avg. Contribution</div><div class="kpi-value">KSh 3,291</div><div class="kpi-change up">↑ Per member/month</div></div>
+        <div class="kpi-card cyan"><div class="kpi-label">Welfare Claims</div><div class="kpi-value">8 Claims</div><div class="kpi-change up">This month</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">Collection Rate</div><div class="kpi-value">87.5%</div><div class="kpi-change up">↑ Of target collected</div></div>
+        <div class="kpi-card purple"><div class="kpi-label">Retention Rate</div><div class="kpi-value">96.2%</div><div class="kpi-change up">Members retained</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Fund Growth YoY</div><div class="kpi-value">+34.8%</div><div class="kpi-change up">↑ Excellent performance</div></div>
+      </div>`;
+  }
+}
+
+// Live display simulation
+function startLiveSimulation() {
+  let amount = 187500;
+  const target = 300000;
+  setInterval(() => {
+    const add = Math.floor(Math.random() * 5000) + 500;
+    amount = Math.min(amount + add, target);
+    const pct = ((amount / target) * 100).toFixed(1);
+    const amountEl = document.getElementById('live-amount');
+    const pctEl = document.getElementById('live-pct');
+    const barEl = document.getElementById('live-bar');
+    if (amountEl) amountEl.textContent = 'KSh ' + amount.toLocaleString();
+    if (pctEl) pctEl.textContent = pct + '% of target reached';
+    if (barEl) barEl.style.width = pct + '%';
+  }, 4000);
+}
+
+// Init
+showDash('overview');
+startLiveSimulation();
+</script>
+</body>
+</html>
